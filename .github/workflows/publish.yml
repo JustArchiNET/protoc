@@ -5,7 +5,7 @@ on:
       - 'v*'
 jobs:
   main:
-    name: Push Docker image to Docker Hub
+    name: Checkout code
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -13,10 +13,10 @@ jobs:
         with:
           submodules: recursive
 
-      - name: Push to Docker Hub
+      - name: Build and push Docker image
         uses: docker/build-push-action@v1
         with:
-          build_args: PROTOC_VERSION=${{ github.event.release.tag_name }}
+          build_args: GIT_REF=${GITHUB_REF}
           password: ${{ secrets.DOCKER_PASSWORD }}
           repository: justarchi/protoc
           tags: latest
