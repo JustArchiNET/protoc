@@ -5,7 +5,6 @@ on:
       - 'v*'
 jobs:
   main:
-    name: Checkout code
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -16,7 +15,7 @@ jobs:
       - name: Build and push Docker image
         uses: docker/build-push-action@v1
         with:
-          build_args: GIT_REF=${GITHUB_REF}
+          build_args: GIT_REF=${{ github.ref }}
           password: ${{ secrets.DOCKER_PASSWORD }}
           repository: justarchi/protoc
           tags: latest
